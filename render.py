@@ -37,8 +37,8 @@ class Render():
 				mb = mapto(sqrd, 0, sqrw, 1, 0)
 				b = limit(mb, 0, 1) 
 				#height value 0-halfheight
-				mh = mapto(distance, 0, viewd, 1, 0)
-				h = limit(mh*viewd//2, 0, height//2)
+				mh = mapto(distance**0.5, 0, 200**0.5, 1, 0)
+				h = limit(mh*height//2, 0, height//2)
 				#colour set with brightness
 				col = tuple(value*b for value in point.colour)
 			#pygame.draw.line(screen, col, (x, 100-h), (x, 100+h), 2)

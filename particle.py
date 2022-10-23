@@ -1,5 +1,6 @@
-from initial import screen, pygame
-from math import sin, cos, radians, atan
+from initial import screen, pygame, SIZE
+swidth, sheight = SIZE[0], SIZE[1]
+from math import sin, cos, radians, copysign
 from methods import distance, add_tuples, limit
 from ray import Ray
 
@@ -10,20 +11,23 @@ class Point():
 		self.colour = colour
 
 
-
 class Particle():
-	
 	def __init__(self, pos, angle, fov, raycount, viewdistance):
 		start = angle - (fov//2)
+		step = fov/raycount
+		pointrange = list(v*step for v in range(start, start+raycount))
 		rays = []
-		for degree in range(start, start+fov, fov//raycount):
+		for i in range(raycount):
+			degree = start + i * step
 			rad = radians(degree)
-			rays.append(Ray((pos), (cos(rad), sin(rad)), degree))
+			rays.append(Ray(pos, (cos(rad), sin(rad)), degree))
 		self.pos = pos
 		self.rot = angle
 		self.fov = fov
 		self.count = raycount
 		self.rays = rays
+		rad = radians(angle+180)
+		self.backray = Ray(pos, (cos(rad), sin(rad)), angle+180)
 		self.vd = limit(viewdistance, 1, 1000)
 		
 
@@ -33,29 +37,46 @@ class Particle():
 		fov = self.fov
 		start = int(rot - (fov//2))
 		raycount = self.count
-		step = fov//raycount
+		step = fov/raycount
 		rays = []
-		for i, ray in enumerate(self.rays):
+		for i in range(raycount):
 			degree = start + i * step
 			rad = radians(degree)
 			rays.append(Ray(self.pos, (cos(rad), sin(rad)), degree))
+		rad = radians(rot+180)
+		self.backray = Ray(self.pos, (cos(rad), sin(rad)), rot+180)
 		self.rays = rays
 		
 
+	def check_collision(self, direction, walls):
+		if direction == 1:
+			pt = self.rays[self.count//2].point
+		elif direction == -1:
+			backray = self.backray
+			raypoints = []
+			for wall in walls:
+				point = backray.cast(wall)
+				if point:
+					dist = distance(point, self.pos)
+					raypoints.append(Point(point, dist, (0, 0, 0)))
+			if (len(raypoints) == 0):
+				return False
+			else:
+				pt = sorted(raypoints, key=lambda x: x.distance)[0]
+		return (pt and distance(self.pos, pt.pos) > 3)
+
+
 	def move(self, amount, walls):
-		ray = self.rays[self.count//2]
-		pt = ray.point
-		if pt:
-			dist = distance(pt.pos, self.pos)
-			if dist > 2:
-				rad = radians(self.rot)
-				normal = (cos(rad), sin(rad))
-				vector = tuple(value*amount for value in normal)
-				newpos = add_tuples(self.pos, vector)
-				newpos = tuple(limit(v, 1, 200) for v in newpos)
-				self.pos = newpos
-				for ray in self.rays:
-					ray.pos = newpos
+		direction = int(copysign(1, amount))
+		if self.check_collision(direction, walls):
+			rad = radians(self.rot)
+			normal = (cos(rad), sin(rad))
+			vector = tuple(value*amount for value in normal)
+			newpos = add_tuples(self.pos, vector)
+			newpos = tuple(limit(v, 1, sheight-2) for v in newpos)
+			self.pos = newpos
+			for ray in self.rays:
+				ray.pos = newpos
 		
 	
 	def update_points(self, walls, draw):
