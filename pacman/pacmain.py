@@ -10,8 +10,6 @@ from pygame.locals import (QUIT,
 from particle import Particle
 from boundary import Boundary, BoundaryPolygon
 from render import Render
-#utility functions
-from methods import flip_vectors
 
 print('loading')
 
@@ -24,6 +22,8 @@ pink, brown = (255, 50, 50), (139, 64, 0)
 #teleports
 tp1 = BoundaryPolygon(((5,85), (-3,85), (-3,115), (5,115)), False)
 tp2 = BoundaryPolygon(((195,85), (203,85), (203,115), (195,115)), False)
+tp1.set_colour((10, 10, 10))
+tp2.set_colour((10, 10, 10))
 #ghosts 
 ghostnames = ['Blinky', 'Pinky', 'Inky', 'Clyde']	
 ghostcolours = [(255, 0, 0), (255, 184, 255), (0, 255, 255), (255, 184, 82)]
@@ -79,7 +79,7 @@ while not done:
 	screen.fill(bgcolour)
 	r.show()
 	#raycaster
-	player.show((10, 10, 10))
+	player.show((20, 20, 20))
 	player.show_ray(player.rays[len(player.rays)//2], y, 2)
 	#walls
 	for wall in wallobjects:
