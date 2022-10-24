@@ -9,7 +9,10 @@ class Point():
 		self.pos = pos
 		self.distance = dist
 		self.colour = colour
-
+''' # tried to fix some perspective warping but caused too many issues
+def root_map(maxvalue, value):
+	return abs(value)**0.5 * (maxvalue/2)**0.5 * copysign(1, value)
+'''
 
 class Particle():
 	def __init__(self, pos, angle, fov, raycount, viewdistance):
@@ -63,12 +66,16 @@ class Particle():
 				return False
 			else:
 				pt = sorted(raypoints, key=lambda x: x.distance)[0]
-		return (pt and distance(self.pos, pt.pos) > 3)
+		return (pt and distance(self.pos, pt.pos) < 3)
 
+	def check_interaction(self, colour):
+		pt = self.rays[self.count//2].point
+		return (pt and distance(self.pos, pt.pos) < 3 and pt.colour == colour)
+			
 
 	def move(self, amount, walls):
 		direction = int(copysign(1, amount))
-		if self.check_collision(direction, walls):
+		if not self.check_collision(direction, walls):
 			rad = radians(self.rot)
 			normal = (cos(rad), sin(rad))
 			vector = tuple(value*amount for value in normal)
