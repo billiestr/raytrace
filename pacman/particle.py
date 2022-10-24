@@ -80,7 +80,8 @@ class Particle():
 			normal = (cos(rad), sin(rad))
 			vector = tuple(value*amount for value in normal)
 			newpos = add_tuples(self.pos, vector)
-			newpos = tuple(limit(v, 1, sheight-2) for v in newpos)
+			newpos = tuple(v % 200 for v in newpos)
+			#newpos = tuple(limit(v, 1, sheight-2) for v in newpos)
 			self.pos = newpos
 			for ray in self.rays:
 				ray.pos = newpos
