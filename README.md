@@ -4,4 +4,4 @@ python program, rendering with pygame
 basic raytracing for a 2d environment with 3d representation
 
 #pacman
-trying to recreate a 2d pacman game with a rendered interpretation
+trying to recreate a 2d pacman game with a rendered pov of pacman
