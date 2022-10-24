@@ -30,7 +30,7 @@ class Render():
 			h=0 # defualt height none
 			if point:
 				
-				distance = point.distance[0]
+				distance = point.distance[1]
 				sqrd = distance**2
 
 				# brightness value 0-1
