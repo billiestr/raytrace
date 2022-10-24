@@ -1,6 +1,6 @@
 from initial import screen, SIZE
 width, height = SIZE[0], SIZE[1]
-
+from walls import walls, wallobjects
 #pygame
 import pygame
 from pygame.locals import (QUIT, 
@@ -19,20 +19,7 @@ print('loading')
 white, black = (255, 255, 255), (0, 0, 0)
 r, g, b = (255, 0, 0), (0, 255, 0), (0, 0, 255)
 y, c, m = (255, 255, 0), (0, 255, 255), (255, 0, 255)
-wallcol = (25, 25, 166)
-pacmancol = (255, 255, 0)
 pink, brown = (255, 50, 50), (139, 64, 0)
-
-#walls
-vertices = [(5,85), (45,85), (45,65), (5,65), (5, 5)]
-vertices = vertices + flip_vectors(vertices, 'x')[::-1] #flips and reverses order
-topwalls = BoundaryPolygon(vertices, False)
-topwalls.set_colour((25, 25, 166))
-vertices = flip_vectors(vertices, 'y') # flips for bottom
-bottomwalls = BoundaryPolygon(vertices, False)
-bottomwalls.set_colour((25, 25, 166))
-
-walls = topwalls.boundarys + bottomwalls.boundarys
 
 #teleports
 tp1 = BoundaryPolygon(((5,85), (-3,85), (-3,115), (5,115)), False)
@@ -42,7 +29,7 @@ ghostnames = ['Blinky', 'Pinky', 'Inky', 'Clyde']
 ghostcolours = [(255, 0, 0), (255, 184, 255), (0, 255, 255), (255, 184, 82)]
 #player
 # start pos, start angle, fov, ray count, view distance
-player = Particle((50, 100), 0, 80, 1000, 200)
+player = Particle((100, 100), -90, 70, 1000, 200)
 
 #bounds
 #vertices = [(0, 0), (width//2, 0), (width//2, height), (0, height)]
@@ -52,7 +39,7 @@ bound.set_colour(white)
 
 clock = pygame.time.Clock()
 ROTVELOCITY = .1
-MOVEVELOCITY = .04
+MOVEVELOCITY = .02
 boundarys = walls + tp1.boundarys + tp2.boundarys
 
 print('drawing')
@@ -75,9 +62,11 @@ while not done:
 	if keys[K_RIGHT]:
 		player.set_rot(player.rot+rotv)
 	if keys[K_i] and player.vd>1:
-			player.vd -= 1
+			player.fov -= 1
+			player.set_rot(player.rot)
 	if keys[K_o]:
-			player.vd += 1
+			player.fov += 1
+			player.set_rot(player.rot)
 	
 	#logic code
 
@@ -93,8 +82,8 @@ while not done:
 	player.show((10, 10, 10))
 	player.show_ray(player.rays[len(player.rays)//2], y, 2)
 	#walls
-	topwalls.show()
-	bottomwalls.show()
+	for wall in wallobjects:
+		wall.show()
 	#selection
 	
 	pygame.display.update()
