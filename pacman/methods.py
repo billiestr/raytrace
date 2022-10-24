@@ -2,17 +2,11 @@ from math import sqrt
 
 #combines tuples through addition
 def add_tuples(tuple1, tuple2):
-	new_list = []
-	for i, value in enumerate(tuple1):
-		new_list.append(value+tuple2[i])
-	return tuple(new_list)
+	return tuple(v+tuple2[i] for i, v in enumerate(tuple1))
 
 #combines tuples through subtraction
 def sub_tuples(tuple1, tuple2):
-	new_list = []
-	for i, value in enumerate(tuple1):
-		new_list.append(value-tuple2[i])
-	return tuple(new_list)
+	return tuple(v-tuple2[i] for i, v in enumerate(tuple1))
 
 def abs_list(new_list):
 	new_list = list(new_list)
@@ -45,8 +39,8 @@ def limit(v, min, max):
 	else:
 		return v
 
-def flip_vectors(vectors, axis):
+def flip_vectors(vectors, axis, centre):
 	if axis == 'x':
-		return list((200-x, y) for x, y in vectors)
+		return list((2*centre-x, y) for x, y in vectors)
 	elif axis == 'y':
-		return list((x, 200-y) for x, y in vectors)
+		return list((x, 2*centre-y) for x, y in vectors)
