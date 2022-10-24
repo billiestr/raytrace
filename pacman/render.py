@@ -28,16 +28,16 @@ class Render():
 			point = points[cstep]
 			col = (0, 0, 0) # default colour black
 			h=0 # defualt height none
-			if points[cstep]:
+			if point:
 				
-				distance = points[cstep].distance[1]
+				distance = point.distance[0]
 				sqrd = distance**2
 
 				# brightness value 0-1
 				mb = mapto(sqrd, 0, sqrw, 1, 0)
 				b = limit(mb, 0, 1) 
 				#height value 0-halfheight
-				mh = mapto(distance**0.5, 0, 200**0.5, 1, 0)
+				mh = mapto(sqrt(distance), 0, sqrt(viewd), 1, 0)
 				h = limit(mh*height//2, 0, height//2)
 				#colour set with brightness
 				col = tuple(value*b for value in point.colour)
