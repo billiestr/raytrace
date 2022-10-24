@@ -1,7 +1,6 @@
-from re import M
 from initial import screen, SIZE
 width, height = SIZE[0], SIZE[1]
-#
+
 #pygame
 import pygame
 from pygame.locals import (QUIT, 
@@ -11,9 +10,11 @@ from pygame.locals import (QUIT,
 from particle import Particle
 from boundary import Boundary, BoundaryPolygon
 from render import Render
+#utility functions
 from methods import flip_vectors
 
 print('loading')
+
 #colour values
 white, black = (255, 255, 255), (0, 0, 0)
 r, g, b = (255, 0, 0), (0, 255, 0), (0, 0, 255)
