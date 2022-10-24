@@ -104,7 +104,12 @@ while not done:
 	
 	#draw code
 	screen.fill(bgcolour)
+	#raycaster
+	p1.show((15, 15, 15))
+	p1.show_ray(p1.rays[len(p1.rays)//2], y, 2)
+	#render
 	r.show()
+	#objects
 	b1.show()
 	square.show()
 	triangle.show()
@@ -114,9 +119,7 @@ while not done:
 	#selection
 	for picker in selection:
 		picker.show()
-	#raycaster
-	p1.show(y)
-	p1.show_ray(p1.rays[len(p1.rays)//2], c, 2)
+	
 	pygame.display.update()
 	
 
