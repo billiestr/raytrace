@@ -44,3 +44,9 @@ def limit(v, min, max):
 		return max
 	else:
 		return v
+
+def flip_vectors(vectors, axis):
+	if axis == 'x':
+		return list((200-x, y) for x, y in vectors)
+	elif axis == 'y':
+		return list((x, 200-y) for x, y in vectors)
