@@ -1,7 +1,8 @@
+from logging import root
 from initial import screen, pygame, SIZE
 swidth, sheight = SIZE[0], SIZE[1]
 from math import sin, cos, radians, copysign
-from methods import distance, add_tuples, limit
+from methods import distance, add_tuples, limit, mapto
 from ray import Ray
 
 class Point():
@@ -9,16 +10,14 @@ class Point():
 		self.pos = pos
 		self.distance = dist
 		self.colour = colour
-''' # tried to fix some perspective warping but caused too many issues
-def root_map(maxvalue, value):
-	return abs(value)**0.5 * (maxvalue/2)**0.5 * copysign(1, value)
-'''
+
+
+
 
 class Particle():
 	def __init__(self, pos, angle, fov, raycount, viewdistance):
-		start = angle - (fov//2)
+		start =  angle-(fov//2)
 		step = fov/raycount
-		pointrange = list(v*step for v in range(start, start+raycount))
 		rays = []
 		for i in range(raycount):
 			degree = start + i * step
@@ -38,7 +37,7 @@ class Particle():
 	def set_rot(self, rot):
 		self.rot = rot
 		fov = self.fov
-		start = int(rot - (fov//2))
+		start =  rot-(fov//2)
 		raycount = self.count
 		step = fov/raycount
 		rays = []
