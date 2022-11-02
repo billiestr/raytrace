@@ -65,8 +65,8 @@ quads.append(make_quad((180, 45), (-20, 5)))
 b1 = make_quad((96, 5), (8, 25))
 #top 'T's
 tb1 = make_tblock((100, 47), 40, (20, 20), 'd')
-tb2 = make_tblock((60, 65), 40, (20, 20), 'r')
-tb3 = make_tblock((140, 65), 40, (20, 20), 'l')
+tb2 = make_tblock((62, 65), 40, (20, 20), 'r')
+tb3 = make_tblock((138, 65), 40, (20, 20), 'l')
 
 #ghost spawn
 vertices = [(93, 88), (80, 88), (80, 112)]
@@ -74,10 +74,22 @@ vertices = vertices + flip_vectors(vertices, 'x', 100)[::-1]
 gs = BoundaryPolygon(vertices, False)
 gs.set_colour(wallcoll)
 
+#bottom quads
+quads.append(make_quad((60, 115), (3, 20)))
+quads.append(make_quad((140, 115), (-3, 20)))
 
+quads.append(make_quad((55, 150), (25, 5)))
+quads.append(make_quad((145, 150), (-25, 5)))
+
+#bottom 'T's
+tb4 = make_tblock((100, 133), 40, (20, 15), 'd')
+tb5 = make_tblock((100, 162), 40, (20, 18), 'd')
+tb6 = make_tblock((50, 180), -55, (-20, 20), 'u')
+tb7 = make_tblock((150, 180), 55, (20, 20), 'u')
 
 
 wallobjects = [topwalls, bottomwalls] + quads + [b1, tb1, tb2, tb3, gs]
+wallobjects += [tb4, tb5, tb6, tb7]
 walls = []
 for wall in wallobjects:
     try:
