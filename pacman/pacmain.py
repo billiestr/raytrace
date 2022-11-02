@@ -29,7 +29,7 @@ ghostnames = ['Blinky', 'Pinky', 'Inky', 'Clyde']
 ghostcolours = [(255, 0, 0), (255, 184, 255), (0, 255, 255), (255, 184, 82)]
 #player
 # start pos, start angle, fov, ray count, view distance
-player = Particle((100, 100), -90, 70, 1000, 200)
+player = Particle((100, 100), -90, 70, 200, 200)
 
 #bounds
 #vertices = [(0, 0), (width//2, 0), (width//2, height), (0, height)]
