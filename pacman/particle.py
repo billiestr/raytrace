@@ -84,6 +84,7 @@ class Particle():
 			self.pos = newpos
 			for ray in self.rays:
 				ray.pos = newpos
+			self.backray.pos = newpos
 		
 	
 	def update_points(self, walls, draw):
